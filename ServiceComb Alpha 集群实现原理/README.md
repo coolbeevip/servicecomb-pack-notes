@@ -50,7 +50,7 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
 
 ## 让事务扫描运行在主节点
 
-事务扫描是通过 `EventScanner.class` 实现的，并且在 `AlphaConfig.class` 中进行初始化，可以看到在 `new EventScanner` 代码执行前前进行了eventScannerEnabled判断，这个参数就是通过``alpha.event.scanner.enabled` 指定的（默认是true），然后传入了`nodeStatus` 对象，这个对象就记录着这个节点的状态（主节点或者从节点），后边会讲解 `nodeStatus` 是如何构造的。
+事务扫描是通过 `EventScanner.java` 实现的，并且在 `AlphaConfig.java` 中进行初始化，可以看到在 `new EventScanner` 代码执行前前进行了eventScannerEnabled判断，这个参数就是通过``alpha.event.scanner.enabled` 指定的（默认是true），然后传入了`nodeStatus` 对象，这个对象就记录着这个节点的状态（主节点或者从节点），后边会讲解 `nodeStatus` 是如何构造的。
 
 ```java
   @Bean
@@ -73,7 +73,7 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
   }
 ```
 
-`EventScanner.class` 的 pollEvents 方法进行定时事务扫描，并使用 `nodeStatus.isMaster()` 判断自己是否是主节点，只有主节点才允许执行。看到这里大家应该知道 `nodeStatus.isMaster()` 是我们判断主节点的关键对象，那么 `NodeStatus.class` 是如何被创建并初始化的呢
+`EventScanner.java` 的 pollEvents 方法进行定时事务扫描，并使用 `nodeStatus.isMaster()` 判断自己是否是主节点，只有主节点才允许执行。看到这里大家应该知道 `nodeStatus.isMaster()` 是我们判断主节点的关键对象，那么 `NodeStatus.java` 是如何被创建并初始化的呢
 
 ```java
   private void pollEvents() {
@@ -97,7 +97,7 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
   }
 ```
 
-我们在 `AlphaConfig.class`  中通过以下方式声明，以确保无论您是否指定了 `alpha.cluster.master.enabled` 参数事务扫描都可以正常工作，在这里可以看到当我们开启了集群模式后节点刚启动的时候状态是Slave，下面会说明状态是如何切换到Master的。
+我们在 `AlphaConfig.java`  中通过以下方式声明，以确保无论您是否指定了 `alpha.cluster.master.enabled` 参数事务扫描都可以正常工作，在这里可以看到当我们开启了集群模式后节点刚启动的时候状态是Slave，下面会说明状态是如何切换到Master的。
 
 ```java
   @Bean
@@ -145,9 +145,9 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
 
 ## 加锁服务基础类
 
-在前边的说明中可以看到，在 `ClusterLockService.class` 的 `masterCheck` 方法中通过 `this.locker = lockProvider.lock(this.getMasterLock());` 获取一个锁并判断是否锁成功。
+在前边的说明中可以看到，在 `ClusterLockService.java` 的 `masterCheck` 方法中通过 `this.locker = lockProvider.lock(this.getMasterLock());` 获取一个锁并判断是否锁成功。
 
-`LockProvider.class` 是一个接口，目前我们提供了基于jdbc的实现，包结构以及类依赖关系如下：
+`LockProvider.java` 是一个接口，目前我们提供了基于jdbc的实现，包结构以及类依赖关系如下：
 
 ![image-20190222113431299](/Volumes/MyWallet/Xunlei/work/servicecomb-pack-notes/ServiceComb Alpha 集群实现原理/assets/image-20190222113431299.png)
 
@@ -157,11 +157,11 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
 
 ![image-20190222114741514](/Volumes/MyWallet/Xunlei/work/servicecomb-pack-notes/ServiceComb Alpha 集群实现原理/assets/image-20190222114741514.png)
 
-* LockProvider.class
+* LockProvider.java
 
   接口定义了锁方法 lock
 
-* LockProviderPersistence.class 
+* LockProviderPersistence.java 
 
    接口定义了以下三个方法，作为持久化锁的接口
 
@@ -169,9 +169,9 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
   - updateLock 更新锁，进行再次锁定并返回是否成功（更新锁的接口设计的目的是为了非长连接锁设计，例如对于按照固定周期进行加锁的实现）
   - unLock 解锁，取消锁定
 
-* AbstractLockProvider.class 
+* AbstractLockProvider.java 
 
-  抽象类实现了 `LockProvider.class` 接口的lock方法，并调用内部的 ``LockProviderPersistence` 接口进行锁操作  
+  抽象类实现了 `LockProvider.java` 接口的lock方法，并调用内部的 ``LockProviderPersistence` 接口进行锁操作  
 
 ## 加锁服务 JDBC 实现
 
@@ -183,7 +183,7 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
 
 * JdbcLockPersistence.java
 
-   `LockProviderPersistence.class` 接口实现，用来实现对数据库表操作
+   `LockProviderPersistence.java` 接口实现，用来实现对数据库表操作
 
 * JdbcLockProvider.java
 
