@@ -149,13 +149,13 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
 
 `LockProvider.java` 是一个接口，目前我们提供了基于jdbc的实现，包结构以及类依赖关系如下：
 
-![image-20190222113431299](/Volumes/MyWallet/Xunlei/work/servicecomb-pack-notes/ServiceComb Alpha 集群实现原理/assets/image-20190222113431299.png)
+![image-20190222113431299](./assets/image-20190222113431299.png)
 
 
 
 依赖关系如下
 
-![image-20190222114741514](/Volumes/MyWallet/Xunlei/work/servicecomb-pack-notes/ServiceComb Alpha 集群实现原理/assets/image-20190222114741514.png)
+![image-20190222114741514](./assets/image-20190222114741514.png)
 
 * LockProvider.java
 
@@ -179,7 +179,7 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
 
 1. JDBC 锁类关系图如下：
 
-![image-20190222122056459](/Volumes/MyWallet/Xunlei/work/servicecomb-pack-notes/ServiceComb Alpha 集群实现原理/assets/image-20190222122056459.png)
+![image-20190222122056459](./assets/image-20190222122056459.png)
 
 * JdbcLockPersistence.java
 
