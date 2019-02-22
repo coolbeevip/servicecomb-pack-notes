@@ -1,4 +1,4 @@
-# ServiceComb Alpha + Spring Cloud Eureka
+# ServiceComb Pack + Spring Cloud Eureka
 
 ​	Alpha在0.4.0版本中支持将服务实例注册到发现服务Eureka中，Oemga只需要配置Eureka地址后就可以动态获取Alpha集群所有实例的gRPC地址
 
