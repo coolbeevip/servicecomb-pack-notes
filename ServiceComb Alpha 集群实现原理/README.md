@@ -50,7 +50,7 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
 
 ## 让事务扫描运行在主节点
 
-事务扫描是通过 `EventScanner.java` 实现的，并且在 `AlphaConfig.java` 中进行初始化，可以看到在 `new EventScanner` 代码执行前前进行了eventScannerEnabled判断，这个参数就是通过``alpha.event.scanner.enabled` 指定的（默认是true），然后传入了`nodeStatus` 对象，这个对象就记录着这个节点的状态（主节点或者从节点），后边会讲解 `nodeStatus` 是如何构造的。
+事务扫描是通过 `EventScanner.java` 实现的，并且在 `AlphaConfig.java` 中进行初始化，可以看到在 `new EventScanner` 代码执行前进行了eventScannerEnabled判断，这个参数就是通过`alpha.event.scanner.enabled` 指定的（默认是true），然后传入了`nodeStatus` 对象，这个对象就记录着这个节点的状态（主节点或者从节点），后边会讲解 `nodeStatus` 是如何构造的。
 
 ```java
   @Bean
