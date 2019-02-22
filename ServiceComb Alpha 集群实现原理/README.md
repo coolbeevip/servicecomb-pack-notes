@@ -171,7 +171,7 @@ java -jar alpha-server-0.4.0-SNAPSHOT-exec.jar \
 
 * AbstractLockProvider.java 
 
-  抽象类实现了 `LockProvider.java` 接口的lock方法，并调用内部的 ``LockProviderPersistence` 接口进行锁操作  
+  抽象类实现了 `LockProvider.java` 接口的lock方法，并调用内部的 `LockProviderPersistence.java` 接口进行锁操作  
 
 ## 加锁服务 JDBC 实现
 
