@@ -1,5 +1,7 @@
 # Alpha Saga 事务流转笔记
 
+> 以下描述如有错误，请以 0.4.0 源代码为准 😅 😅 
+
 1. 正常的流转
 
 ![sequence-booking-normal](assets/sequence-booking-normal.png)
