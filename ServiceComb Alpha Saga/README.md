@@ -6,7 +6,11 @@
 
 ![sequence-booking-normal](assets/sequence-booking-normal.png)
 
-2. 服务异常
+2. 可能存在的异常点
+
+   ![sequence-booking-hotel-exception](assets/sequence-booking-exception-points.png)
+
+3. 服务异常
 
    HOTEL 服务内部异常，触发事务补偿
 
