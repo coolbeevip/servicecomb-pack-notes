@@ -1,0 +1,56 @@
+version: '3.2'
+services:
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=saga
+      - POSTGRES_USER=saga
+      - POSTGRES_PASSWORD=password
+
+  elasticsearch:
+    image: elasticsearch:6.6.2
+    hostname: elasticsearch
+    container_name: elasticsearch
+    environment:
+      - "ES_JAVA_OPTS=-Xmx256m -Xms256m"
+      - "discovery.type=single-node"
+      - "cluster.routing.allocation.disk.threshold_enabled=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  zookeeper:
+    image: coolbeevip/alpine-zookeeper:3.4.14
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - 2181:2181
+
+  kafka:
+    image: coolbeevip/alpine-kafka:2.2.1-2.12
+    hostname: kafka
+    container_name: kafka
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 10.0.0.20
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    ports:
+      - 9092:9092
+    links:
+      - zookeeper:zookeeper
+    depends_on:
+      - zookeeper
+
+  redis:
+    image: redis:5.0.5-alpine
+    hostname: redis
+    container_name: redis
+    ports:
+      - 6379:6379
